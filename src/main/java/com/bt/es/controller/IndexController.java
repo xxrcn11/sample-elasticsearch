@@ -13,7 +13,7 @@ import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,7 +28,7 @@ public class IndexController {
 	private RestHighLevelClient client;
 	
 	
-	@DeleteMapping(value = "/delete")
+	@DeleteMapping
 	public String delete() throws IOException {
 		DeleteIndexRequest request = new DeleteIndexRequest("test");
 		request.timeout("200m"); 
@@ -38,7 +38,7 @@ public class IndexController {
 		return response.toString();
 	}
 	
-	@GetMapping(value = "/create")
+	@PostMapping
 	public String create() throws IOException {
 		
 		XContentBuilder indexBuilder = XContentFactory.jsonBuilder()
@@ -58,6 +58,9 @@ public class IndexController {
 	                        .field("type","Object")
 	                    .endObject()
 	                    .startObject("message")
+	                        .field("type","Object")
+	                    .endObject()
+	                    .startObject("telNumbers")
 	                        .field("type","Object")
 	                    .endObject()
 	                .endObject()
